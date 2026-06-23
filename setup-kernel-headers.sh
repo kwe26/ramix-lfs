@@ -6,6 +6,7 @@ tar -xf $LFS/tmp/kernel.tar.xz
 cd $LFS/pkgs/linux-*
 make mrproper
 make headers
-find usr/include -type f ! -name '*.h' -delete
+# find usr/include -type f ! -name '*.h' -delete
 mkdir -p $LFS/build/usr/include
-cp -rv usr/include/* $LFS/build/usr/include
+find usr/include -type f -name '*.h' -exec \
+    cp --parents {} "$LFS/build/usr/include" \;

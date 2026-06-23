@@ -2,3 +2,7 @@ tmp/
 build/
 tools/
 pkgs/
+boot/
+out/
+iso/
+initfs/

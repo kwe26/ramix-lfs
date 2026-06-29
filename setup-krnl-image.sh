@@ -1,5 +1,16 @@
 cd "$LFS/build"
 
+rm $LFS/boot/rootfs.squashfs
+
+sudo umount -lf "$LFS/build/pkgs"
+sudo umount -lf "$LFS/build/tmp"
+sudo umount -lf "$LFS/build/dev/pts"
+sudo umount -lf "$LFS/build/dev"
+sudo umount -lf "$LFS/build/proc"
+sudo umount -lf "$LFS/build/sys"
+
+sudo chroot "$LFS/build" /sbin/ldconfig
+
 mksquashfs \
     "$LFS/build" \
     "$LFS/boot/rootfs.squashfs" \

@@ -48,33 +48,47 @@ make -j"$(nproc)"
 echo "==================== Installing BusyBox ===================="
 
 make CONFIG_PREFIX="$INITFS" install
+make CONFIG_PREFIX="$LFS/build" install
 
 echo "==================== Creating /init ===================="
 
 cat > "$INITFS/init" <<'EOF'
-#!/bin/sh
+#!/bin/busybox sh
 
-mount -t devtmpfs devtmpfs /dev
+set -x
+
 mount -t proc proc /proc
 mount -t sysfs sysfs /sys
-
-echo "[Ramix] Searching for ISO..."
+mount -t devtmpfs devtmpfs /dev
 
 mkdir -p /iso
+mkdir -p /lower
+mkdir -p /overlay
 mkdir -p /newroot
 
 mount -t iso9660 /dev/sr0 /iso
 
-echo "[Ramix] Mounting rootfs.squashfs..."
+mount -t squashfs -o loop /iso/boot/rootfs.squashfs /lower
 
-mount -t squashfs -o loop /iso/rootfs.squashfs /newroot
+mount -t tmpfs tmpfs /overlay
 
-echo "[Ramix] Switching root..."
+mkdir -p /overlay/upper
+mkdir -p /overlay/work
 
-exec switch_root /newroot /sbin/init
+mount -t overlay overlay \
+    -o lowerdir=/lower,upperdir=/overlay/upper,workdir=/overlay/work \
+    /newroot
 
-echo "[Ramix] Failed."
-exec sh
+echo "===== Ramix initramfs ====="
+date
+mount
+
+mount --move /proc /newroot/proc
+mount --move /sys  /newroot/sys
+mount --move /dev  /newroot/dev
+
+echo "Switching root..."
+exec switch_root /newroot /init
 EOF
 
 chmod +x "$INITFS/init"

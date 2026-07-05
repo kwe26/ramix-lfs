@@ -48,7 +48,7 @@ make -j"$(nproc)"
 echo "==================== Installing BusyBox ===================="
 
 make CONFIG_PREFIX="$INITFS" install
-make CONFIG_PREFIX="$LFS/build" install
+# make CONFIG_PREFIX="$LFS/build" install
 
 echo "==================== Creating /init ===================="
 
@@ -79,7 +79,6 @@ mount -t overlay overlay \
     -o lowerdir=/lower,upperdir=/overlay/upper,workdir=/overlay/work \
     /newroot
 
-echo "===== Ramix initramfs ====="
 date
 mount
 
@@ -87,8 +86,13 @@ mount --move /proc /newroot/proc
 mount --move /sys  /newroot/sys
 mount --move /dev  /newroot/dev
 
-echo "Switching root..."
-exec switch_root /newroot /init
+mkdir -p /run
+mount -t tmpfs -o mode=755,nosuid,nodev tmpfs /run
+
+mkdir -p /newroot/run
+
+mount --move /run /newroot/run
+exec switch_root /newroot /usr/lib/systemd/systemd
 EOF
 
 chmod +x "$INITFS/init"

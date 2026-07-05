@@ -9,6 +9,8 @@ sudo umount -lf "$LFS/build/dev"
 sudo umount -lf "$LFS/build/proc"
 sudo umount -lf "$LFS/build/sys"
 
+sudo rm $LFS/build/pkgs
+
 sudo chroot "$LFS/build" /sbin/ldconfig
 
 mksquashfs \

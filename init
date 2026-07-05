@@ -1,19 +1,35 @@
-#!/bin/bash
+#!/bin/sh
+set -eu
 
-# mount -t proc proc /proc
-# mount -t sysfs sys /sys
-# mount -t devtmpfs devtmpfs /dev
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-echo "====================================================="
-echo
-echo "Ramix Init"
-echo
-echo "====================================================="
+echo "[Ramix] Initializing..."
 
-while true; do
-    /bin/bash
-    echo
-    echo "Shell exited. Restarting..."
-    echo
-    sleep 1
-done
+# # Mount essential pseudo-filesystems
+# mountpoint -q /proc || mount -t proc proc /proc
+# mountpoint -q /sys  || mount -t sysfs sysfs /sys
+# mountpoint -q /dev  || mount -t devtmpfs devtmpfs /dev
+# mountpoint -q /run  || mount -t tmpfs -o mode=755,nosuid,nodev tmpfs /run
+
+# # Optional early mounts
+# mkdir -p /dev/pts
+# mountpoint -q /dev/pts || mount -t devpts devpts /dev/pts
+
+# mkdir -p /dev/shm
+# mountpoint -q /dev/shm || mount -t tmpfs -o mode=1777,nosuid,nodev tmpfs /dev/shm
+
+# Create machine-id if missing
+if [ ! -s /etc/machine-id ]; then
+    systemd-machine-id-setup
+fi
+
+# Ensure required runtime directories exist
+mkdir -p \
+    /run/systemd \
+    /run/lock \
+    /var/log \
+    /var/lib/systemd
+
+echo "[Ramix] Starting systemd..."
+
+exec /usr/lib/systemd/systemd

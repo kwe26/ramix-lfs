@@ -1,0 +1,13 @@
+[build]
+system = "make"
+
+out_of_source = false
+
+make = [
+    "headers"
+]
+
+install = [
+    "INSTALL_HDR_PATH=${DESTDIR}/usr",
+    "headers_install"
+]

@@ -1,0 +1,4 @@
+[build]
+system = "script"
+
+script = "./rx-ca-certs.sh"

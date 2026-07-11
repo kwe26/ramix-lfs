@@ -1,0 +1,17 @@
+[build]
+system = "autotools"
+
+out_of_source = true
+
+configure = [
+    "--prefix=/usr",
+    "--disable-static"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}"
+]

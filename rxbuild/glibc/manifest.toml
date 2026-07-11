@@ -1,0 +1,17 @@
+name = "glibc"
+version = "2.43"
+release = 1
+
+arch = "x86_64"
+
+license = "LGPL-2.1-or-later"
+
+description = "GNU C Library"
+
+homepage = "https://www.gnu.org/software/libc/"
+
+maintainer = "Ramix Team"
+
+depends = [
+    "linux-api-headers>=7.1.1"
+]

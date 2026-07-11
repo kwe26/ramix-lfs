@@ -1,4 +1,12 @@
+#!/usr/bin/env bash
+LFS=$(pwd)
+
 cd "$LFS/build"
+[ -n "${LFS:-}" ] || {
+    echo "ERROR: LFS is not set"
+    exit 1
+}
+
 
 rm $LFS/boot/rootfs.squashfs
 

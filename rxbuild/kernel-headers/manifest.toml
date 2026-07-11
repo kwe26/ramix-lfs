@@ -1,0 +1,15 @@
+name = "linux-api-headers"
+version = "7.1.1"
+release = 1
+
+arch = "x86_64"
+
+license = "GPL-2.0-only WITH Linux-syscall-note"
+
+description = "Linux kernel API headers"
+
+homepage = "https://www.kernel.org/"
+
+maintainer = "Ramix Team"
+
+depends = []

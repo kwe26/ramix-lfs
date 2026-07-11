@@ -1,0 +1,21 @@
+version = 1
+
+[build]
+system = "autotools"
+
+out_of_source = true
+
+configure = [
+    "--prefix=/usr",
+    "--sysconfdir=/etc",
+    "--localstatedir=/var",
+    "--disable-nls"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}"
+]

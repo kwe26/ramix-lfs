@@ -4,6 +4,4 @@ qemu-system-x86_64 \
     -cdrom Ramix.iso \
     -netdev user,id=net0 \
     -device e1000,netdev=net0 \
-    -enable-kvm \
-    # -nographic \
-    # -serial mon:stdio
+    -enable-kvm 

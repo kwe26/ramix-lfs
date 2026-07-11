@@ -1,0 +1,17 @@
+name = "ca-certificates"
+version = "20250630"
+release = 1
+
+arch = "any"
+
+license = "MPL-2.0"
+
+description = "Mozilla CA certificate bundle"
+
+homepage = "https://curl.se/docs/caextract.html"
+
+maintainer = "Ramix Team"
+
+depends = [
+    "glibc>=2.43"
+]

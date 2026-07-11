@@ -1,0 +1,21 @@
+[build]
+system = "autotools"
+
+out_of_source = true
+
+configure = [
+    "--prefix=/usr",
+    "--disable-werror",
+    "--enable-kernel=5.10",
+    "--enable-stack-protector=strong",
+    "--enable-bind-now",
+    "libc_cv_slibdir=/usr/lib64"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}"
+]

@@ -1,0 +1,19 @@
+name = "bash"
+version = "5.3.0"
+release = 1
+
+arch = "x86_64"
+
+license = "GPL-3.0-or-later"
+
+description = "GNU Bourne Again Shell"
+
+homepage = "https://www.gnu.org/software/bash/"
+
+maintainer = "Ramix Team"
+
+depends = [
+    "glibc>=2.43",
+    "readline>=8.3",
+    "ncurses>=6.6"
+]

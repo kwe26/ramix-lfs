@@ -18,6 +18,14 @@ if [[ ! -f "$HOST_SCRIPT" ]]; then
     exit 1
 fi
 
+echo "Running:"
+echo "  $HOST_SCRIPT"
+echo
+
+echo "Contents:"
+sed -n '1,20p' "$HOST_SCRIPT"
+echo
+
 SCRIPT_NAME="$(basename "$HOST_SCRIPT")"
 
 cleanup() {

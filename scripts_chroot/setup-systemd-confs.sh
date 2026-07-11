@@ -95,3 +95,19 @@ services:   files
 EOF
 
 systemctl enable getty@tty1.service
+
+systemctl enable systemd-networkd.service
+systemctl enable systemd-resolved.service
+
+mkdir -p /etc/systemd/network
+
+cat > /etc/systemd/network/20-wired.network <<'EOF'
+[Match]
+Name=e*
+
+[Network]
+DHCP=yes
+IPv6AcceptRA=yes
+EOF
+
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf

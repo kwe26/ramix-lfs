@@ -1,0 +1,17 @@
+name = "ncurses"
+version = "6.6"
+release = 1
+
+arch = "x86_64"
+
+license = "MIT"
+
+description = "Terminal handling library"
+
+homepage = "https://invisible-island.net/ncurses/"
+
+maintainer = "Ramix Team"
+
+depends = [
+    "glibc>=2.43"
+]

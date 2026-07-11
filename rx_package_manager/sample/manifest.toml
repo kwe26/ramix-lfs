@@ -1,0 +1,4 @@
+[package]
+name = "ca-certificates"
+version = 1.0
+desc = "CACerts"

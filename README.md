@@ -58,6 +58,28 @@ Features include:
 
 > Ramix is currently under active development. New packages, build improvements, and system components are added continuously.
 
+## Run Instructions
+
+*ISO LINK (LATEST)*
+> https://github.com/kwe26/ramix-lfs/releases/download/0.1-lfs.3/Ramix-20260719.iso*
+
+```bash
+qemu-system-x86_64 \
+    -enable-kvm \
+    -cpu host \
+    -smp 2 \
+    -m 2G \
+    -cdrom Ramix.iso \
+    \
+    -display gtk,gl=on \
+    -device virtio-vga-gl \
+    \
+    -device qemu-xhci \
+    \
+    -netdev user,id=net0 \
+    -device virtio-net-pci,netdev=net0
+```
+
 ## License
 
 This project is licensed under the No License unless otherwise specified.

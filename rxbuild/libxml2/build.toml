@@ -1,0 +1,21 @@
+[build]
+system = "autotools"
+
+out_of_source = true
+
+configure = [
+    "--prefix=/usr",
+    "--disable-static",
+    "--with-history",
+    "--with-threads",
+    "--with-zlib",
+    "--with-python=no"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}"
+]

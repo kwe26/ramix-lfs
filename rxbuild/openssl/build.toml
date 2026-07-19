@@ -1,0 +1,19 @@
+[build]
+system = "openssl"
+
+configure = [
+    "--prefix=/usr",
+    "--openssldir=/usr/ssl",
+    "shared",
+    "zlib",
+    "-Wl,-rpath,/usr/lib64"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}",
+    "install_sw"
+]

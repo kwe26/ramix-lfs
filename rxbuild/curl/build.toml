@@ -1,0 +1,22 @@
+[build]
+system = "autotools"
+
+out_of_source = true
+
+configure = [
+    "--prefix=/usr",
+    "--disable-static",
+    "--with-openssl",
+    "--with-zlib",
+    "--without-libpsl",
+    "--with-ca-bundle=/usr/ssl/certs/ca-certificates.crt",
+    "--with-ca-path=/usr/ssl/certs"
+]
+
+make = [
+    "-j${NPROC}"
+]
+
+install = [
+    "DESTDIR=${DESTDIR}"
+]

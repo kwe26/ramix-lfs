@@ -1,0 +1,17 @@
+name = "zlib"
+version = "1.3.2"
+release = 1
+
+arch = "x86_64"
+
+license = "Zlib"
+
+description = "Compression library implementing the DEFLATE algorithm"
+
+homepage = "https://zlib.net/"
+
+maintainer = "Ramix Team"
+
+depends = [
+    "glibc>=2.43"
+]

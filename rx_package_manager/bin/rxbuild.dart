@@ -96,6 +96,42 @@ Future<void> buildMake(
     );
 }
 
+Future<void> buildOpenSSL(
+  Map<String, dynamic> build,
+  Directory projectDir,
+  Directory rxbuild,
+) async {
+  final buildDir = Directory(join(rxbuild.path, "build"));
+  final destDir = Directory(join(rxbuild.path, "dest"));
+
+  if (rxbuild.existsSync()) {
+    rxbuild.deleteSync(recursive: true);
+  }
+
+  buildDir.createSync(recursive: true);
+  destDir.createSync(recursive: true);
+
+  await run(
+    "./Configure",
+    replaceVars(build["configure"] ?? [], destDir.absolute.path),
+    workingDirectory: projectDir.path,
+  );
+
+  await run(
+  "make",
+  replaceVars(build["make"] ?? [], destDir.absolute.path),
+  workingDirectory: projectDir.path,
+);
+
+await run(
+  "make",
+  [
+    ...replaceVars(build["install"] ?? [], destDir.absolute.path),
+  ],
+  workingDirectory: projectDir.path,
+);
+}
+
 Future<void> main(List<String> args) async {
   String? root;
   String? manifestPath;
@@ -165,6 +201,8 @@ Future<void> main(List<String> args) async {
         await buildMake(build, projectDir, rxbuild);
       case "script":
         await buildScript(build, projectDir, rxbuild);
+      case "openssl":
+        await buildOpenSSL(build, projectDir, rxbuild);
       default:
         throw Exception("Unknown Build system. rxpkg failed");
     }

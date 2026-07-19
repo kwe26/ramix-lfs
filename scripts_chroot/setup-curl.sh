@@ -6,7 +6,9 @@ cd curl-*
     --disable-static \
     --with-openssl \
     --with-zlib \
-    --without-libpsl
+    --without-libpsl \
+    --with-ca-bundle=/usr/ssl/cert.pem \
+    --with-ca-path=/usr/ssl/certs
 
     make -j"$(nproc)"
 

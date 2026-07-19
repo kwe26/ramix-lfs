@@ -381,10 +381,12 @@ Future<void> verifyExecutableSignatures({
 }
 
 void _removeExisting(String path) {
-  switch (FileSystemEntity.typeSync(
+  final type = FileSystemEntity.typeSync(
     path,
     followLinks: false,
-  )) {
+  );
+
+  switch (type) {
     case FileSystemEntityType.file:
       File(path).deleteSync();
       break;
@@ -394,7 +396,16 @@ void _removeExisting(String path) {
       break;
 
     case FileSystemEntityType.directory:
-      // Keep directories. We only replace files/symlinks.
+      final dir = Directory(path);
+
+      if (dir.listSync(followLinks: false).isEmpty) {
+        dir.deleteSync();
+      } else {
+        throw Exception(
+          "Cannot replace non-empty directory '$path' with a symlink.",
+        );
+      }
+
       break;
 
     case FileSystemEntityType.notFound:
